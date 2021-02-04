@@ -1,0 +1,52 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.imd'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /**
+     * Spring Core dependencies
+     *
+     * The version of org.springframework.boot is declared at plugins block that placed top of this script.
+     */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    /**
+     * Database dependencies
+     */
+    runtimeOnly 'com.h2database:h2' // It would be used until the database setup is done.
+    runtimeOnly 'org.postgresql:postgresql' // The version of the connector will be fixed when the database setup is done.
+    /**
+     * Test dependencies
+     */
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    /**
+     * Tools
+     */
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
+    compile group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.3'
+    compile group: 'org.springdoc', name: 'springdoc-openapi-data-rest', version: '1.5.3'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
+
+test {
+    useJUnitPlatform()
+}
