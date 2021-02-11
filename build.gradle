@@ -47,6 +47,25 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'dev' : profile
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources", "src/main/resources-${profile}"
+        }
+    }
+}
+
 test {
     useJUnitPlatform()
+}
+
+task buildProd(type: Exec) {
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine "gradlew.bat"
+    } else {
+        commandLine "./gradlew"
+    }
+    args "clean", "build", "-Pprofile=prod"
 }
