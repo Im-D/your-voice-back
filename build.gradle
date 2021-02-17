@@ -31,8 +31,10 @@ dependencies {
     /**
      * Database dependencies
      */
-    runtimeOnly 'com.h2database:h2' // It would be used until the database setup is done.
-    runtimeOnly 'org.postgresql:postgresql' // The version of the connector will be fixed when the database setup is done.
+    // It would be used until the database setup is done.
+    runtimeOnly 'com.h2database:h2'
+    // The version of the connector will be fixed when the database setup is done.
+    runtimeOnly 'org.postgresql:postgresql'
     /**
      * Test dependencies
      */
@@ -40,10 +42,15 @@ dependencies {
     /**
      * Tools
      */
+    /*Lombok*/
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
+
+    /*swagger*/
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.3'
     implementation group: 'org.springdoc', name: 'springdoc-openapi-data-rest', version: '1.5.3'
+
+    /*devtools*/
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
@@ -51,8 +58,10 @@ ext.profile = (!project.hasProperty('profile') || !profile) ? 'dev' : profile
 
 sourceSets {
     main {
+        java {
+        }
         resources {
-            srcDirs "src/main/resources", "src/main/resources-${profile}"
+            srcDirs += ["src/main/resources-${profile}"]
         }
     }
 }
