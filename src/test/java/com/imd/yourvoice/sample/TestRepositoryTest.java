@@ -31,9 +31,9 @@ class TestRepositoryTest {
     }
 
     @Test
-    void getOne() {
+    void findById() {
         String name = "test";
-        TestEntity result = testRepository.getOne(1L);
+        TestEntity result = testRepository.findById(1L).get();
         assertThat(result.getName()).isEqualTo(name);
     }
 
