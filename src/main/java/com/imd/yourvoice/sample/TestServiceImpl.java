@@ -11,10 +11,10 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public TestDTO readHello() {
-        TestDTO result = testRepository.findByName("hello").toDto();
+        TestEntity result = testRepository.findByName("hello");
         return result == null ?
                 createHello(TestDTO.builder().name("hello").build()) :
-                result;
+                result.toDto();
     }
 
     @Override
