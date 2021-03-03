@@ -89,6 +89,28 @@ class QuestionControllerTest {
 
     @ParameterizedTest
     @MethodSource
+    void createQuestion_useJsonString_unknownProperties(String input, Map<String, Object> expected) throws Exception {
+        mockMvc.perform(post("/question")
+                .content(input)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    }
+
+    @SuppressWarnings("unused")
+    static Stream<Arguments> createQuestion_useJsonString_unknownProperties() {
+        return Stream.of(Arguments.arguments(
+                "{\"contents\": \"test\", \"emoji\": \"test\",\"createDateTime\": \"2021-03-03 22:34:00\",\"test\" : \"test\"}",
+                Map.of(
+                        "isSuccess", "fail",
+                        "message", "UnknownRequestProperties Error"
+                )
+        ));
+    }
+
+    @ParameterizedTest
+    @MethodSource
     void createQuestion_validationFail(QuestionDTO input, Map<String, Object> expected) throws Exception {
         mockMvc.perform(post("/question")
                 .content(objectMapper.writeValueAsString(input))
