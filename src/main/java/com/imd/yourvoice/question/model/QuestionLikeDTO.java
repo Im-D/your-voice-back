@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuestionLikeDTO {
-    private long id;
+    private Long id;
     private Question question;
     private LocalDateTime createDateTime;
 

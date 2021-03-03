@@ -21,7 +21,7 @@ public class Question {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
-    private long indexNumber;
+    private Long indexNumber;
     private String contents;
     private String emoji;
     private LocalDateTime createDateTime;

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 public class QuestionLike {
     @Id
-    private long id;
+    private Long id;
     @ManyToOne
     private Question question;
     private LocalDateTime createDateTime;

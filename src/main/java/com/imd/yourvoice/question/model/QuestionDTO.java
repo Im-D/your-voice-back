@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuestionDTO {
     private UUID id;
-    private long indexNumber;
+    private Long indexNumber;
     @NotEmpty
     @Size(max = 140)
     private String contents;
