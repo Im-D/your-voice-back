@@ -2,24 +2,19 @@ package com.imd.yourvoice.question.model;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
-@ToString
-@Entity
-public class QuestionLike {
-    @Id
+public class QuestionLikeDTO {
     private long id;
-    @ManyToOne
     private Question question;
     private LocalDateTime createDateTime;
 
-    public QuestionLikeDTO toDTO() {
-        return QuestionLikeDTO.builder()
+    public QuestionLike toEntity() {
+        return QuestionLike.builder()
                 .id(id)
                 .question(question)
                 .createDateTime(createDateTime)
