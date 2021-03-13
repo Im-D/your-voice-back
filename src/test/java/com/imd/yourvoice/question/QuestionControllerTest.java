@@ -1,6 +1,7 @@
 package com.imd.yourvoice.question;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.imd.yourvoice.common.ResponseDTO;
 import com.imd.yourvoice.question.model.QuestionDTO;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -89,7 +90,7 @@ class QuestionControllerTest {
 
     @ParameterizedTest
     @MethodSource
-    void createQuestion_useJsonString_unknownProperties(String input, Map<String, Object> expected) throws Exception {
+    void createQuestion_useJsonString_unknownProperties(String input, ResponseDTO expected) throws Exception {
         mockMvc.perform(post("/question")
                 .content(input)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -102,16 +103,21 @@ class QuestionControllerTest {
     static Stream<Arguments> createQuestion_useJsonString_unknownProperties() {
         return Stream.of(Arguments.arguments(
                 "{\"contents\": \"test\", \"emoji\": \"test\",\"createDateTime\": \"2021-03-03 22:34:00\",\"test\" : \"test\"}",
-                Map.of(
-                        "isSuccess", "fail",
-                        "message", "UnknownRequestProperties Error"
-                )
+                ResponseDTO.builder()
+                        .data(Map.of(
+                                "contents", "test",
+                                "emoji", "test",
+                                "createDateTime", "2021-03-03 22:34:00",
+                                "test", "test"
+                        )).isSuccess("fail")
+                        .message("UnknownRequestProperties Error")
+                        .build()
         ));
     }
 
     @ParameterizedTest
     @MethodSource
-    void createQuestion_validationFail(QuestionDTO input, Map<String, Object> expected) throws Exception {
+    void createQuestion_validationFail(QuestionDTO input, ResponseDTO expected) throws Exception {
         mockMvc.perform(post("/question")
                 .content(objectMapper.writeValueAsString(input))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -129,30 +135,30 @@ class QuestionControllerTest {
                                 .emoji("test")
                                 .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
                                 .build(),
-                        Map.of(
-                                "data", QuestionDTO.builder()
+                        ResponseDTO.builder()
+                                .data(QuestionDTO.builder()
                                         .contents("")
                                         .emoji("test")
                                         .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
-                                        .build(),
-                                "isSuccess", "fail",
-                                "message", "Validation Error"
-                        )
+                                        .build())
+                                .isSuccess("fail")
+                                .message("Validation Error")
+                                .build()
                 ), Arguments.arguments(
                         QuestionDTO.builder()
                                 .contents("메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿")
                                 .emoji("test")
                                 .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
                                 .build(),
-                        Map.of(
-                                "data", QuestionDTO.builder()
+                        ResponseDTO.builder()
+                                .data(QuestionDTO.builder()
                                         .contents("메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿")
                                         .emoji("test")
                                         .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
-                                        .build(),
-                                "isSuccess", "fail",
-                                "message", "Validation Error"
-                        )
+                                        .build())
+                                .isSuccess("fail")
+                                .message("Validation Error")
+                                .build()
                 )
         );
     }
