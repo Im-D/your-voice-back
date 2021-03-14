@@ -2,7 +2,6 @@ package com.imd.yourvoice.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -19,11 +18,11 @@ import java.util.Map;
 @Configuration
 public class MappingJackson2HttpMessageConverterWithCachingRequest extends MappingJackson2HttpMessageConverter {
 
-    @Autowired
-    private ServletRequest request;
+    private final ServletRequest request;
 
-    public MappingJackson2HttpMessageConverterWithCachingRequest(ObjectMapper objectMapper) {
+    public MappingJackson2HttpMessageConverterWithCachingRequest(ObjectMapper objectMapper, ServletRequest request) {
         super(objectMapper);
+        this.request = request;
         this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
     }
 
