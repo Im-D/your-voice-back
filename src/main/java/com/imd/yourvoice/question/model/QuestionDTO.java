@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.imd.yourvoice.common.Const.*;
+
 @Data
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -27,7 +29,7 @@ public class QuestionDTO {
     private String emoji;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT_STRING)
     private LocalDateTime createDateTime;
 
     private List<QuestionLikeDTO> questionLikeDTOs;
@@ -55,7 +57,7 @@ public class QuestionDTO {
         private String emoji;
 
         @JsonSerialize(using = LocalDateTimeSerializer.class)
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT_STRING)
         private LocalDateTime createDateTime;
 
         public Question toEntity() {

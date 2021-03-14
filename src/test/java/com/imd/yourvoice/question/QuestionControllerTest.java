@@ -77,7 +77,7 @@ class QuestionControllerTest {
     @SuppressWarnings("unused")
     static Stream<Arguments> createQuestion_useJsonString() {
         return Stream.of(Arguments.arguments(
-                "{\"contents\": \"test\", \"emoji\": \"test\",\"createDateTime\": \"2021-03-03 22:34:00\"}",
+                "{\"contents\": \"test\", \"emoji\": \"test\",\"createDateTime\": \"2021-03-03T22:34:00\"}",
                 Map.of(
                         "data", QuestionDTO.builder()
                                 .contents("test")
