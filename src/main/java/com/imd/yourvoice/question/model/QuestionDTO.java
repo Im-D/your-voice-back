@@ -8,6 +8,7 @@ import lombok.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -21,13 +22,11 @@ public class QuestionDTO {
 
     private Long indexNumber;
 
-    @NotEmpty
-    @Size(max = 140)
     private String contents;
 
     private String emoji;
 
-    @JsonSerialize(using= LocalDateTimeSerializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createDateTime;
 
@@ -42,5 +41,32 @@ public class QuestionDTO {
                 .createDateTime(createDateTime)
                 .questionLikes(questionLikeDTOs.stream().map(QuestionLikeDTO::toEntity).collect(Collectors.toList()))
                 .build();
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class CreateRequest {
+        @NotEmpty
+        @Size(max = 140)
+        private String contents;
+
+        private String emoji;
+
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime createDateTime;
+
+        public Question toEntity() {
+            return Question.builder()
+                    .id(null)
+                    .indexNumber(null)
+                    .contents(contents)
+                    .emoji(emoji)
+                    .createDateTime(createDateTime)
+                    .questionLikes(Collections.emptyList())
+                    .build();
+        }
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -32,7 +33,7 @@ class QuestionControllerTest {
 
     @ParameterizedTest
     @MethodSource
-    void createQuestion(QuestionDTO input, Map<String, Object> expected) throws Exception {
+    void createQuestion(QuestionDTO.CreateRequest input, Map<String, Object> expected) throws Exception {
         mockMvc.perform(post("/question")
                 .content(objectMapper.writeValueAsString(input))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -44,7 +45,7 @@ class QuestionControllerTest {
     @SuppressWarnings("unused")
     static Stream<Arguments> createQuestion() {
         return Stream.of(Arguments.arguments(
-                QuestionDTO.builder()
+                QuestionDTO.CreateRequest.builder()
                         .contents("test")
                         .emoji("test")
                         .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
@@ -53,6 +54,7 @@ class QuestionControllerTest {
                         "data", QuestionDTO.builder()
                                 .contents("test")
                                 .emoji("test")
+                                .questionLikeDTOs(Collections.emptyList())
                                 .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
                                 .build(),
                         "isSuccess", "success",
@@ -80,6 +82,7 @@ class QuestionControllerTest {
                         "data", QuestionDTO.builder()
                                 .contents("test")
                                 .emoji("test")
+                                .questionLikeDTOs(Collections.emptyList())
                                 .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
                                 .build(),
                         "isSuccess", "success",
@@ -117,7 +120,7 @@ class QuestionControllerTest {
 
     @ParameterizedTest
     @MethodSource
-    void createQuestion_validationFail(QuestionDTO input, ResponseDTO expected) throws Exception {
+    void createQuestion_validationFail(QuestionDTO.CreateRequest input, ResponseDTO expected) throws Exception {
         mockMvc.perform(post("/question")
                 .content(objectMapper.writeValueAsString(input))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -130,13 +133,13 @@ class QuestionControllerTest {
     static Stream<Arguments> createQuestion_validationFail() {
         return Stream.of(
                 Arguments.arguments(
-                        QuestionDTO.builder()
+                        QuestionDTO.CreateRequest.builder()
                                 .contents("")
                                 .emoji("test")
                                 .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
                                 .build(),
                         ResponseDTO.builder()
-                                .data(QuestionDTO.builder()
+                                .data(QuestionDTO.CreateRequest.builder()
                                         .contents("")
                                         .emoji("test")
                                         .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
@@ -145,13 +148,13 @@ class QuestionControllerTest {
                                 .message("Validation Error")
                                 .build()
                 ), Arguments.arguments(
-                        QuestionDTO.builder()
+                        QuestionDTO.CreateRequest.builder()
                                 .contents("메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿")
                                 .emoji("test")
                                 .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))
                                 .build(),
                         ResponseDTO.builder()
-                                .data(QuestionDTO.builder()
+                                .data(QuestionDTO.CreateRequest.builder()
                                         .contents("메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿메세지메세지메세지굿")
                                         .emoji("test")
                                         .createDateTime(LocalDateTime.of(2021, 03, 03, 22, 34))

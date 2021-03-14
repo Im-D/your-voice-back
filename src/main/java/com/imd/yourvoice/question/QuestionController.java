@@ -11,9 +11,9 @@ import javax.validation.Valid;
 @RestController
 public class QuestionController {
     @PostMapping("/question")
-    public ResponseDTO<QuestionDTO> createQuestion(@RequestBody@Valid QuestionDTO questionDTO) {
+    public ResponseDTO<QuestionDTO> createQuestion(@RequestBody @Valid QuestionDTO.CreateRequest questionDTO) {
         return ResponseDTO.<QuestionDTO>builder()
-                .data(questionDTO)
+                .data(questionDTO.toEntity().toDTO())
                 .isSuccess("success")
                 .message("CREATE SUCCESSFUL")
                 .build();
