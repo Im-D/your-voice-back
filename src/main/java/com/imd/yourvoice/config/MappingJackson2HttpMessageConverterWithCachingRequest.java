@@ -28,8 +28,6 @@ public class MappingJackson2HttpMessageConverterWithCachingRequest extends Mappi
 
     @Override
     public Object read(Type type, Class<?> contextClass, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-        request.setAttribute("test", "test");
-
         byte[] requestBody = inputMessage.getBody().readAllBytes();
         request.setAttribute("requestBody", new ObjectMapper().readValue(requestBody, Map.class));
 
