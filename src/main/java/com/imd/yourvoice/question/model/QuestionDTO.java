@@ -18,11 +18,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuestionDTO {
     private UUID id;
+
     private Long indexNumber;
+
     @NotEmpty
     @Size(max = 140)
     private String contents;
+
     private String emoji;
+
     @JsonSerialize(using= LocalDateTimeSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createDateTime;

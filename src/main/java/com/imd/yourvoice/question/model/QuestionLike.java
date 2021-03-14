@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
 public class QuestionLike {
     @Id
     private Long id;
+
     @ManyToOne
     private Question question;
+
     private LocalDateTime createDateTime;
 
     public QuestionLikeDTO toDTO() {
