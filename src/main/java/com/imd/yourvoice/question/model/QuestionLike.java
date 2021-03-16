@@ -23,7 +23,7 @@ public class QuestionLike {
     public QuestionLikeDTO toDTO() {
         return QuestionLikeDTO.builder()
                 .id(id)
-                .question(question)
+                .questionId(question.getId())
                 .createDateTime(createDateTime)
                 .build();
     }
