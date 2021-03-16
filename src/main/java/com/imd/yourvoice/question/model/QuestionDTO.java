@@ -3,6 +3,7 @@ package com.imd.yourvoice.question.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -19,6 +20,7 @@ import static com.imd.yourvoice.common.Const.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Schema(name="Question")
 public class QuestionDTO {
     private UUID id;
 
@@ -49,6 +51,7 @@ public class QuestionDTO {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    @Schema(name = "Question-CreateRequest")
     public static class CreateRequest {
         @NotEmpty
         @Size(max = 140)
