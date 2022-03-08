@@ -33,6 +33,10 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<QuestionLike> questionLikes;
 
+    public static Question of(UUID id) {
+        return new Question(id, null, "", "", null, null);
+    }
+
     public QuestionDTO toDTO() {
         return QuestionDTO.builder()
                 .id(id)
